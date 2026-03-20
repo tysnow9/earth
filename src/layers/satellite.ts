@@ -21,7 +21,8 @@ export function addNasaGibsLayer(
   layerId: string,
   date?: string  // YYYY-MM-DD, defaults to today
 ): void {
-  const _dateStr = date ?? new Date().toISOString().split('T')[0]
+  // date parameter reserved for future time-travel feature
+  void date
 
   map.addSource(`gibs-${layerId}`, {
     type: 'raster',

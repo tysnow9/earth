@@ -10,6 +10,7 @@
  * Future layers (see src/layers/) can be toggled on/off independently.
  */
 
+import 'maplibre-gl/dist/maplibre-gl.css'
 import maplibregl from 'maplibre-gl'
 import { SOURCES, INITIAL_VIEW } from './config'
 
@@ -21,13 +22,12 @@ export function initGlobe(containerId: string): maplibregl.Map {
     zoom: INITIAL_VIEW.zoom,
     pitch: INITIAL_VIEW.pitch,
     bearing: INITIAL_VIEW.bearing,
-    // Globe projection — full sphere rendering
-    projection: { type: 'globe' },
-    // Disable default attribution control (we'll add a custom one later)
     attributionControl: false,
-    // Smooth rendering
-    antialias: true,
+    canvasContextAttributes: { antialias: true },
   })
+
+  // Globe projection must be set via setProjection() in v5 (not a MapOptions field)
+  map.setProjection({ type: 'globe' })
 
   map.on('load', () => {
     addTerrain(map)

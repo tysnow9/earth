@@ -26,10 +26,9 @@ export function initGlobe(containerId: string): maplibregl.Map {
     canvasContextAttributes: { antialias: true },
   })
 
-  // Globe projection must be set via setProjection() in v5 (not a MapOptions field)
-  map.setProjection({ type: 'globe' })
-
   map.on('load', () => {
+    // Set globe projection after style load — ensures it isn't overridden during style init
+    map.setProjection({ type: 'globe' })
     addTerrain(map)
     configureSky(map)
     console.log('[earth] Globe initialized')
@@ -41,6 +40,7 @@ export function initGlobe(containerId: string): maplibregl.Map {
 function buildStyle(): maplibregl.StyleSpecification {
   return {
     version: 8,
+    projection: { type: 'globe' },
     glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
     sprite: 'https://demotiles.maplibre.org/styles/osm-bright-gl-style/sprite',
     sources: {

@@ -16,10 +16,18 @@ Future: drone mode near surface, bookmarks, live data layers.
 
 ## Current State
 
-**Phase 1 — Scaffolding complete (not yet running)**
+**Phase 1 — Core globe WORKING ✓**
 
-Files created:
-- `index.html` — bare full-screen shell
+Visually confirmed working:
+- 3D sphere globe renders correctly (MapLibre GL JS v5 globe projection)
+- ESRI World Imagery satellite basemap loading with good detail
+- Country borders, labels rendering cleanly over satellite
+- AWS terrain elevation active
+- Sky/atmosphere configured
+- Runs fast, graphics look great per user
+
+Files in place:
+- `index.html` — bare full-screen shell, no browser chrome
 - `src/main.ts` — entry: init globe, controls, fullscreen
 - `src/globe.ts` — MapLibre globe, ESRI satellite + OpenFreeMap vector + AWS terrain + sky
 - `src/config.ts` — all tile URLs and constants in one place
@@ -29,12 +37,10 @@ Files created:
 - `src/layers/` — placeholder modules for satellite, weather, wildfires, political
 - `package.json`, `tsconfig.json`, `vite.config.ts`
 
-**Not yet done / needs verification:**
-- `npm install` + `npm run dev` — first run not yet tested
-- OpenFreeMap tile URL may need confirming against their current API
-- AWS terrain tile LOD vs ESRI zoom levels need visual QA
+**Not yet done:**
 - Gamepad axis mapping needs testing with actual PS4 controller
 - No UI panel yet (bookmarks, layer toggles are code-only)
+- Drone mode (Phase 2) not yet implemented
 
 ---
 
@@ -54,11 +60,9 @@ Files created:
 
 ## Known Issues / TODOs
 
-- [ ] First run: verify ESRI + OpenFreeMap + AWS terrain all load correctly
-- [ ] OpenFreeMap sprite/glyph URLs may need updating (check their docs)
 - [ ] Gamepad: test actual PS4 button/axis mapping (controller-specific variation possible)
 - [ ] Drone mode: not yet implemented (Phase 2)
-- [ ] No UI layer — bookmarks and layer toggles are API-only for now
+- [ ] No UI — bookmarks and layer toggles are API-only for now
 - [ ] Attribution panel: should add visible credits for tile sources
 
 ---
@@ -67,7 +71,7 @@ Files created:
 
 | Phase | Focus | Status |
 |-------|-------|--------|
-| 1 | Core globe + trackpad + keyboard + PS4 skeleton | Scaffolded |
+| 1 | Core globe + trackpad + keyboard + PS4 skeleton | **Complete ✓** |
 | 2 | Drone mode, full PS4 integration | Not started |
 | 3 | Bookmarks UI | Not started |
 | 4 | Weather / wildfire / political layers | Not started |
@@ -99,9 +103,12 @@ NASA GIBS WMTS:
 
 ## Session Log
 
-### 2026-03-20 — Initial scaffold
+### 2026-03-20 — Initial scaffold + Phase 1 complete
 - Discussed tech stack options (CesiumJS vs MapLibre vs Three.js)
 - Chose MapLibre GL JS (globe mode, fully free, no keys)
 - Defined 4-phase roadmap
 - Scaffolded full project structure
-- Next: `npm install` + first visual run, verify tile sources
+- **Key bug fixed:** maplibre-gl v4 has no globe mode — upgraded to v5.20.2
+- **Key bug fixed:** `setProjection()` must be called inside `map.on('load')`, and also set in the style spec itself, or it gets overridden during style init
+- Globe confirmed working: 3D sphere, satellite imagery, labels, terrain
+- Next: Phase 2 — drone mode + full PS4 controller integration

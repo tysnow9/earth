@@ -22,6 +22,7 @@ export function initGlobe(containerId: string): maplibregl.Map {
     zoom: INITIAL_VIEW.zoom,
     pitch: INITIAL_VIEW.pitch,
     bearing: INITIAL_VIEW.bearing,
+    maxPitch: 90,
     attributionControl: false,
     canvasContextAttributes: { antialias: true },
   })

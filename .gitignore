@@ -2,3 +2,7 @@ node_modules/
 dist/
 .DS_Store
 *.local
+
+# Prevent compiled .js artifacts from shadowing .ts source files.
+# Vite resolves .js before .ts — stale tsc output silently breaks the app.
+src/**/*.js
